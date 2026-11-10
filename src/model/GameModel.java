@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GameModel {
-    public static final int W = 800, H = 450, TOP = 280, BOT = 420, WORLD = 3200;
+    public static final int W = 800, H = 450, TOP = 320, BOT = 420, WORLD = 3200;
     // tipos: 0 = jogador, 1 = capanga, 2 = rapido, 3 = chefe
     public static final double[] SPD = {0, 1.5, 2.6, 1.8};
     public static final int[] DMG = {0, 8, 6, 18}, REACH = {0, 65, 60, 95}, CD = {0, 90, 60, 70}, HP = {100, 50, 35, 300};
@@ -30,7 +30,7 @@ public class GameModel {
         active = false; win = false; hitEvent = false;
     }
 
-    // ---------- getters ----------
+    // getters
     public Fighter getPlayer() { return player; }
     public List<Fighter> getEnemies() { return enemies; }
     public List<Item> getItems() { return items; }
@@ -43,14 +43,14 @@ public class GameModel {
     public boolean isWin() { return win; }
     public boolean isGameOver() { return win || player.hp <= 0; }
 
-    /** Retorna true uma unica vez depois que um golpe do jogador acertou um inimigo. */
+    // Retorna true uma unica vez depois que um golpe do jogador acertou um inimigo
     public boolean consumeHit() {
         boolean h = hitEvent;
         hitEvent = false;
         return h;
     }
 
-    // ---------- acoes do jogador ----------
+    // ações do jogador
     private boolean canAct() {
         return !isGameOver() && player.atk == 0 && player.hurt == 0 && player.down == 0;
     }
@@ -66,7 +66,7 @@ public class GameModel {
         if (!isGameOver() && player.z == 0 && player.down == 0) player.vz = 12;
     }
 
-    // ---------- regras ----------
+    // regras
     private double clamp(double v, double a, double b) { return Math.max(a, Math.min(b, v)); }
 
     private void hit(Fighter f, int dmg, boolean knock, int dir) {
@@ -82,12 +82,14 @@ public class GameModel {
         if (bat > 0) bat--;
         for (Fighter e : enemies) {
             double dx = (e.x - p.x) * p.face;
-            if (e.down == 0 && dx > 0 && dx < reach && Math.abs(e.y - p.y) < 25)
+            if (e.down == 0 && dx > 0 && dx < reach && Math.abs(e.y - p.y) < 25) {
                 hit(e, dmg, (big && e.type != 3) || e.hp <= dmg, p.face);
+                hitEvent = true;
+            }
         }
     }
 
-    /** dx e dy: direcao pressionada (-1, 0 ou 1). */
+    //dx e dy: direcao pressionada (-1, 0 ou 1) movimentação do jogador 
     public void update(int dx, int dy) {
         tick++;
         if (isGameOver()) return;
@@ -123,7 +125,7 @@ public class GameModel {
         collectDeadAndItems();
         updateWaves();
     }
-
+    // movimentação dos inimigos 
     private void updateEnemies() {
         Fighter p = player;
         for (Fighter e : enemies) {
@@ -153,7 +155,7 @@ public class GameModel {
             if (e.moving) e.walk += 0.25;
         }
     }
-
+    // itens 
     private void collectDeadAndItems() {
         Iterator<Fighter> it = enemies.iterator();
         while (it.hasNext()) {
@@ -175,7 +177,7 @@ public class GameModel {
             return false;
         });
     }
-
+    // gerando as ondas de inimigos 
     private void updateWaves() {
         if (!active && wave < TRIG.length && player.x > TRIG[wave]) {
             active = true; toSpawn = CNT[wave]; spawnT = 60;

@@ -1,6 +1,7 @@
 package controller;
 
 import model.GameModel;
+import util.AudioManager;
 import view.MainFrame;
 
 import javax.swing.Timer;
@@ -12,11 +13,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GameController implements ActionListener, KeyListener {
-    private static final int END_DELAY_TICKS = 150; // ~2,4 s mostrando VITORIA / GAME OVER
+    private static final int END_DELAY_TICKS = 210; // 3,5 s mostrando VITORIA / GAME OVER e voltando para o menu
+
+    // camihos dentro da pasta src/resources
+    private static final String MENU_MUSIC = "/resources/menu.wav";
+    private static final String GAME_MUSIC = "/resources/game.wav";
+    private static final String HIT_SFX = "/resources/hit.wav";
+    private static final String LOSE_SFX = "/resources/gameover.wav";
+    private static final String WIN_SFX = "/resources/victory.wav";
 
     private final GameModel model = new GameModel();
     private final MainFrame frame = new MainFrame(model);
-    private final Timer timer = new Timer(16, this); // ~60 FPS
+    private final Timer timer = new Timer(16, this); // 60 FPS
     private final Set<Integer> keys = new HashSet<>();
     private int endTicks;
 
@@ -29,6 +37,7 @@ public class GameController implements ActionListener, KeyListener {
     public void start() {
         frame.showMenu();
         frame.setVisible(true);
+        AudioManager.playMusic(MENU_MUSIC);
     }
 
     private void startGame() {
@@ -36,6 +45,7 @@ public class GameController implements ActionListener, KeyListener {
         keys.clear();
         endTicks = 0;
         frame.showGame();
+        AudioManager.playMusic(GAME_MUSIC);
         timer.start();
     }
 
@@ -43,6 +53,7 @@ public class GameController implements ActionListener, KeyListener {
         timer.stop();
         frame.getMenuPanel().setLastResult(message);
         frame.showMenu();
+        AudioManager.playMusic(MENU_MUSIC);
     }
 
     private boolean down(int code) { return keys.contains(code); }
@@ -55,20 +66,32 @@ public class GameController implements ActionListener, KeyListener {
         model.update(dx, dy);
         frame.getGamePanel().repaint();
 
-        if (model.isGameOver() && ++endTicks > END_DELAY_TICKS) {
-            String result = model.isWin() ? "VITORIA!" : "GAME OVER";
-            endGame("Ultima partida: " + result + " - Pontos: " + model.getScore());
+        if (model.consumeHit()) AudioManager.playSound(HIT_SFX);
+
+        if (model.isGameOver()) {
+            if (endTicks == 0) { // primeiro frame do fim de jogo
+                AudioManager.stopMusic();
+                AudioManager.playSound(model.isWin() ? WIN_SFX : LOSE_SFX);
+            }
+            if (++endTicks > END_DELAY_TICKS) {
+                String result = model.isWin() ? "VITORIA!" : "GAME OVER";
+                endGame("Ultima partida: " + result + " - Pontos: " + model.getScore());
+            }
         }
     }
 
-    // teclado
+    // captutando os comandos do teclado
     @Override
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
         keys.add(c);
         if (c == KeyEvent.VK_Z) model.attack();
         if (c == KeyEvent.VK_X) model.jump();
-        if (c == KeyEvent.VK_R) { model.reset(); endTicks = 0; }
+        if (c == KeyEvent.VK_R) {
+            model.reset();
+            endTicks = 0;
+            AudioManager.playMusic(GAME_MUSIC);
+        }
         if (c == KeyEvent.VK_ESCAPE) endGame("Partida abandonada");
     }
 
