@@ -68,7 +68,7 @@ Este projeto tem como finalidade consolidar os conhecimentos adquiridos na disci
 
 ## 👨‍💻 Desenvolvedores
 
-Projeto desenvolvido pelos estudantes Bruno Pereira, Debora Duque Estrada, Raul Athayde e Renam Kling como parte das atividades acadêmicas da disciplina de Programação Orientada a Objetos.
+Projeto desenvolvido pelos estudantes Bruno Pereira, Débora Duque Estrada, Raul Athayde e Renam Kling como parte das atividades acadêmicas da disciplina de Programação Orientada a Objetos.
 
 ---
 
