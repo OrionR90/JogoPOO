@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
     private final GamePanel gamePanel;
 
     public MainFrame(GameModel model) {
-        super("Dino Brawler");
+        super("Crocodilos e Dinossauros");
         gamePanel = new GamePanel(model);
         root.add(menuPanel, MENU);
         root.add(gamePanel, GAME);
