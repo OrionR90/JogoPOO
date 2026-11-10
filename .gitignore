@@ -1,0 +1,26 @@
+# Compilados do Java
+*.class
+*.bluej
+*.pkg
+
+# Arquivos de empacotamento
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Pastas de build
+bin/
+build/
+target/
+out/
+
+# Configurações de IDEs (IntelliJ, Eclipse, VS Code)
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+.DS_Store
