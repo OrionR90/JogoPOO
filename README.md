@@ -1,5 +1,5 @@
 # 🦖 Cadillacs and Dinosaurs – Projeto Java
-
+![alt text](TelaMenu.png) ![alt text](TelaJogo.png)
 ## 📌 Sobre o projeto
 
 Este projeto consiste no desenvolvimento de um jogo inspirado no clássico jogo de fliperama **Cadillacs and Dinosaurs**, lançado originalmente nos anos 90.
