@@ -21,7 +21,8 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class GamePanel extends JPanel {
-    private static final int W = GameModel.W, H = GameModel.H, TOP = GameModel.TOP;
+    private static final long serialVersionUID = 1L;
+	private static final int W = GameModel.W, H = GameModel.H, TOP = GameModel.TOP;
     private static final Color[] COL = {
         new Color(40, 140, 255), new Color(230, 130, 40), new Color(160, 60, 200), new Color(200, 30, 30)
     };
@@ -67,7 +68,7 @@ public class GamePanel extends JPanel {
                 for (int i = offset / tw; i * tw - offset < W; i++) {
                     int x = i * tw - offset;
                     if (MIRROR_TILES && i % 2 == 1) {
-                        g.drawImage(background, x + tw, 0, x, H, 0, 0, iw, ih, null); // espelhada
+                        g.drawImage(background, x + tw, 0, x, H, 0, 0, iw, ih, null); // espelhar imagem
                     } else {
                         g.drawImage(background, x, 0, x + tw, H, 0, 0, iw, ih, null);
                     }

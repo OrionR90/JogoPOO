@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Toca musica (loop) e efeitos sonoros. Aceita arquivos .wav (PCM 16 bits). */
+
 public class AudioManager {
     private static final Map<String, Clip> SFX = new HashMap<>();
     private static Clip music;

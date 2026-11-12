@@ -8,7 +8,9 @@ import javax.swing.SwingUtilities;
 import java.awt.CardLayout;
 
 public class MainFrame extends JFrame {
-    private static final String MENU = "menu", GAME = "game";
+    private static final long serialVersionUID = 1L;
+
+	private static final String MENU = "menu", GAME = "game";
 
     private final CardLayout cards = new CardLayout();
     private final JPanel root = new JPanel(cards);

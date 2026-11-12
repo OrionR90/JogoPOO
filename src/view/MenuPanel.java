@@ -21,8 +21,10 @@ import java.net.URL;
 
 public class MenuPanel extends JPanel {
 
-    // true = mostra uma borda vermelha nos botoes para voce ajustar a posicao
-    private static final boolean DEBUG = false;
+    
+    private static final long serialVersionUID = 1L;
+
+	private static final boolean DEBUG = false;
 
     // Posicao dos botoes (x, y, largura, altura),
     private static final Rectangle NEW_GAME_AREA = new Rectangle(478, 612, 717, 118);
@@ -35,8 +37,10 @@ public class MenuPanel extends JPanel {
 
     public MenuPanel() {
         setPreferredSize(new Dimension(GameModel.W, GameModel.H));
-        setLayout(null); // posicionamento manual
+        setLayout(null); 
         loadBackground();
+        failBackground(newGameButton, "Novo Jogo");
+        failBackground(exitButton, "Sair");
 
         resultLabel.setFont(new Font("Monospaced", Font.BOLD, 16));
         resultLabel.setForeground(Color.WHITE);
@@ -45,7 +49,7 @@ public class MenuPanel extends JPanel {
         add(exitButton);
         add(resultLabel);
     }
-
+    
     private void loadBackground() {
         try {
             URL url = getClass().getResource("/resources/menu_bg.png");
@@ -54,6 +58,18 @@ public class MenuPanel extends JPanel {
         } catch (Exception e) {
             System.err.println("Erro ao carregar imagem: " + e);
         }
+    }
+    
+    private void failBackground(JButton b, String text) {
+    	if(background != null) return;
+    	b.setText(text);
+    	b.setOpaque(true);
+    	b.setContentAreaFilled(true);
+    	b.setBorderPainted(true);
+    	b.setFont(new Font("Monospaced", Font.BOLD, 20));
+    	b.setBackground(new Color(50,50,50));
+    	b.setForeground(Color.WHITE);
+    	b.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
     }
 
     // Botao invisivel so a area clicavel, o desenho vem da imagem de fundo.
@@ -82,8 +98,14 @@ public class MenuPanel extends JPanel {
 
     @Override
     public void doLayout() {
-        newGameButton.setBounds(scaled(NEW_GAME_AREA));
-        exitButton.setBounds(scaled(EXIT_AREA));
+        if(background != null) {
+	    	newGameButton.setBounds(scaled(NEW_GAME_AREA));
+	        exitButton.setBounds(scaled(EXIT_AREA));
+        }else {
+        	int cx = getWidth() / 2;
+        	newGameButton.setBounds(cx - 100, 200, 220, 50);
+        	exitButton.setBounds(cx - 100, 270, 220, 50);
+        }
         resultLabel.setBounds(0, getHeight() - 40, getWidth(), 30);
     }
 
@@ -100,6 +122,13 @@ public class MenuPanel extends JPanel {
         } else {
             g.setPaint(new GradientPaint(0, 0, new Color(255, 160, 80), 0, getHeight(), new Color(60, 20, 80)));
             g.fillRect(0, 0, getWidth(), getHeight());
+            g.setFont(new Font("Monospaced", Font.BOLD, 40));
+            String title = "Crocodilos e Dinossauros";
+            int x = (getWidth() - g.getFontMetrics().stringWidth(title)) / 2;
+            g.setColor(new Color(0,0,0,120));
+            g.drawString(title, x + 3, 123);
+            g.setColor(Color.WHITE);
+            g.drawString(title, x, 120);
         }
     }
 }
