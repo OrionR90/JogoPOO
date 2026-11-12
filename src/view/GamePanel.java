@@ -43,7 +43,7 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         loadBackground();
     }
-
+    
     private void loadBackground() {
         try {
             URL url = getClass().getResource("/resources/game_bg.png");
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel {
             System.err.println("Erro ao carregar imagem: " + e);
         }
     }
-
+	
     //Desenha o fundo: a imagem rolando com a camera, ou o cenario padrao se nao houver imagem
     private void drawScenery(Graphics2D g, double cam) {
         if (background != null) {
