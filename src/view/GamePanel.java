@@ -141,7 +141,7 @@ public class GamePanel extends JPanel {
         g.setStroke(new BasicStroke(1));
         g.setColor(Color.DARK_GRAY); g.fillRect(15, 12, 204, 18);
         g.setColor(new Color(60, 200, 80)); g.fillRect(17, 14, 200 * Math.max(0, p.hp) / p.maxHp, 14);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.YELLOW);
         g.setFont(new Font("Monospaced", Font.BOLD, 18));
         g.drawString("SCORE " + model.getScore() + (model.getBat() > 0 ? "   TACO x" + model.getBat() : ""), 15, 50);
         g.setFont(new Font("Monospaced", Font.BOLD, 14));

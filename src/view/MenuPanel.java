@@ -42,8 +42,8 @@ public class MenuPanel extends JPanel {
         failBackground(newGameButton, "Novo Jogo");
         failBackground(exitButton, "Sair");
 
-        resultLabel.setFont(new Font("Monospaced", Font.BOLD, 16));
-        resultLabel.setForeground(Color.WHITE);
+        resultLabel.setFont(new Font("Monospaced", Font.BOLD, 20));
+        resultLabel.setForeground(new Color(255, 190, 50));
 
         add(newGameButton);
         add(exitButton);
